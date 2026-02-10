@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#FF6B35">
+  <title>BlackRoad Metrics</title>
+  <link rel="manifest" href="manifest.json">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #000 0%, #1a1a1a 100%);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .container {
+      max-width: 600px;
+      text-align: center;
+    }
+    .logo {
+      font-size: 120px;
+      margin-bottom: 20px;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+    h1 {
+      font-size: 48px;
+      margin-bottom: 20px;
+      background: linear-gradient(90deg, #FF6B35, #F7931E);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .tagline {
+      font-size: 20px;
+      color: #999;
+      margin-bottom: 40px;
+    }
+    .button {
+      background: #FF6B35;
+      color: #fff;
+      border: none;
+      padding: 15px 40px;
+      border-radius: 8px;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .button:hover {
+      background: #F7931E;
+      transform: translateY(-2px);
+    }
+    .badge {
+      display: inline-block;
+      background: rgba(255,107,53,0.2);
+      border: 1px solid #FF6B35;
+      color: #FF6B35;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 14px;
+      margin: 20px 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo">📈</div>
+    <h1>BlackRoad Metrics</h1>
+    <p class="tagline">Performance tracking and KPIs</p>
+    
+    <div>
+      <span class="badge">📱 PWA</span>
+      <span class="badge">🤖 Android</span>
+      <span class="badge">💻 Desktop</span>
+      <span class="badge">🍎 iOS</span>
+    </div>
+    
+    <button class="button" onclick="alert('BlackRoad Metrics is live!')">
+      Launch App
+    </button>
+    
+    <p style="margin-top: 40px; color: #666; font-size: 14px;">
+      Published on BlackRoad OS App Store<br>
+      Zero gatekeepers • Zero fees • Total freedom
+    </p>
+  </div>
+</body>
+</html>

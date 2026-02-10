@@ -1,0 +1,8 @@
+{
+  "name": "BlackRoad Analytics",
+  "version": "1.0.0",
+  "description": "Deep data insights",
+  "platforms": ["web", "pwa", "android", "desktop", "ios"],
+  "icon": "📉",
+  "published_date": "2026-02-10T14:39:22-06:00"
+}
