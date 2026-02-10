@@ -1,0 +1,16 @@
+{
+  "name": "Recipe Book",
+  "short_name": "Recipe Book",
+  "description": "Discover and save delicious recipes",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFA07A",
+  "theme_color": "#FFA07A",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}

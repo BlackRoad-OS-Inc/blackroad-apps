@@ -1,0 +1,16 @@
+{
+  "name": "Stream TV",
+  "short_name": "Stream TV",
+  "description": "Watch movies and shows",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#E50914",
+  "theme_color": "#E50914",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}

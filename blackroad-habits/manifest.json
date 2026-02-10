@@ -1,0 +1,16 @@
+{
+  "name": "Habit Builder",
+  "short_name": "Habit Builder",
+  "description": "Build positive habits daily",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#BA55D3",
+  "theme_color": "#BA55D3",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}

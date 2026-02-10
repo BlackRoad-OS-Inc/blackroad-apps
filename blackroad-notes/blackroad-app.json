@@ -1,0 +1,18 @@
+{
+  "name": "Notes Plus",
+  "icon": "📝",
+  "description": "Rich text editor with markdown and collaboration",
+  "version": "1.0.0",
+  "author": "BlackRoad OS",
+  "category": "productivity",
+  "price": "free",
+  "installs": 0,
+  "rating": 5.0,
+  "features": [
+    "Lightning fast",
+    "Encrypted",
+    "Cloud sync",
+    "Cross-platform"
+  ],
+  "color": "#FFD93D"
+}

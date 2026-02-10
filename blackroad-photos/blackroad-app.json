@@ -1,0 +1,18 @@
+{
+  "name": "Photo Gallery",
+  "icon": "📸",
+  "description": "AI-powered photo organization and editing",
+  "version": "1.0.0",
+  "author": "BlackRoad OS",
+  "category": "productivity",
+  "price": "free",
+  "installs": 0,
+  "rating": 5.0,
+  "features": [
+    "Lightning fast",
+    "Encrypted",
+    "Cloud sync",
+    "Cross-platform"
+  ],
+  "color": "#B5EAD7"
+}

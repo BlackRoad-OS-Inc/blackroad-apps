@@ -1,0 +1,16 @@
+{
+  "name": "Podcast Player",
+  "short_name": "Podcast Player",
+  "description": "Stream your favorite podcasts",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#9370DB",
+  "theme_color": "#9370DB",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}

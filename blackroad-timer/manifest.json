@@ -1,0 +1,16 @@
+{
+  "name": "Time Tracker",
+  "short_name": "Time Tracker",
+  "description": "Track time and productivity",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FF8C00",
+  "theme_color": "#FF8C00",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "name": "Crypto Wallet",
+  "short_name": "Crypto Wallet",
+  "description": "Secure cryptocurrency management",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F7931A",
+  "theme_color": "#F7931A",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}

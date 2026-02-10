@@ -1,0 +1,16 @@
+{
+  "name": "VPN Shield",
+  "short_name": "VPN Shield",
+  "description": "Private and secure browsing",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#00CED1",
+  "theme_color": "#00CED1",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}

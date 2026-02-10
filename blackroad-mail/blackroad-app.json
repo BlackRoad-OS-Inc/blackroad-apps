@@ -1,0 +1,18 @@
+{
+  "name": "Mail Client",
+  "icon": "📧",
+  "description": "Fast, secure email client with smart filters",
+  "version": "1.0.0",
+  "author": "BlackRoad OS",
+  "category": "productivity",
+  "price": "free",
+  "installs": 0,
+  "rating": 5.0,
+  "features": [
+    "Lightning fast",
+    "Encrypted",
+    "Cloud sync",
+    "Cross-platform"
+  ],
+  "color": "#A8E6CF"
+}

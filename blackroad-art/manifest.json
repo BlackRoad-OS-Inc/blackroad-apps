@@ -1,0 +1,16 @@
+{
+  "name": "Art Studio",
+  "short_name": "Art Studio",
+  "description": "Digital drawing and painting",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FF1493",
+  "theme_color": "#FF1493",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}

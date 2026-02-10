@@ -1,0 +1,16 @@
+{
+  "name": "Budget Manager",
+  "short_name": "Budget Manager",
+  "description": "Track spending and save money",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#32CD32",
+  "theme_color": "#32CD32",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}

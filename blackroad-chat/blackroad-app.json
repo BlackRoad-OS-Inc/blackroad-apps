@@ -1,0 +1,18 @@
+{
+  "name": "Team Chat",
+  "icon": "💬",
+  "description": "Real-time team communication and collaboration platform",
+  "version": "1.0.0",
+  "author": "BlackRoad OS",
+  "category": "productivity",
+  "price": "free",
+  "installs": 0,
+  "rating": 5.0,
+  "features": [
+    "Lightning fast",
+    "Encrypted",
+    "Cloud sync",
+    "Cross-platform"
+  ],
+  "color": "#FF6B6B"
+}

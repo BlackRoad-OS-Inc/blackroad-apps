@@ -1,0 +1,16 @@
+{
+  "name": "Weather Plus",
+  "short_name": "Weather Plus",
+  "description": "Real-time weather forecasts and alerts",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#87CEEB",
+  "theme_color": "#87CEEB",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}

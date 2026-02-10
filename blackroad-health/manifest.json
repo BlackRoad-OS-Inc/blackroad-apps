@@ -1,0 +1,16 @@
+{
+  "name": "Health Records",
+  "short_name": "Health Records",
+  "description": "Manage medical information",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#DC143C",
+  "theme_color": "#DC143C",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "name": "File Manager",
+  "icon": "📁",
+  "description": "Secure cloud file storage and sharing platform",
+  "version": "1.0.0",
+  "author": "BlackRoad OS",
+  "category": "productivity",
+  "price": "free",
+  "installs": 0,
+  "rating": 5.0,
+  "features": [
+    "Lightning fast",
+    "Encrypted",
+    "Cloud sync",
+    "Cross-platform"
+  ],
+  "color": "#95E1D3"
+}

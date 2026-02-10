@@ -1,0 +1,16 @@
+{
+  "name": "Book Library",
+  "short_name": "Book Library",
+  "description": "Read and organize books",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#8B4513",
+  "theme_color": "#8B4513",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "name": "Maps Navigator",
+  "short_name": "Maps Navigator",
+  "description": "GPS navigation and directions",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#34A853",
+  "theme_color": "#34A853",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}
