@@ -1,0 +1,10 @@
+name = "blackroad-task-runner"
+main = "src/index.js"
+compatibility_date = "2024-12-01"
+
+[triggers]
+crons = ["0 */1 * * *"]
+
+[vars]
+ENVIRONMENT = "production"
+MAX_TASK_DURATION_MS = "300000"

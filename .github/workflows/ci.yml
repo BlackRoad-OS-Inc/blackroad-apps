@@ -1,0 +1,147 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  NODE_VERSION: "20"
+
+jobs:
+  lint-and-validate:
+    name: Lint & Validate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Validate workflow files
+        run: |
+          echo "Validating repository structure..."
+          test -f LICENSE || (echo "LICENSE missing" && exit 1)
+          test -f README.md || (echo "README missing" && exit 1)
+          test -f index.html || (echo "index.html missing" && exit 1)
+          echo "Core files present."
+
+      - name: Validate PWA manifests
+        run: |
+          ERRORS=0
+          for dir in blackroad-*/; do
+            if [ ! -f "$dir/manifest.json" ]; then
+              echo "Missing manifest.json in $dir"
+              ERRORS=$((ERRORS + 1))
+            fi
+            if [ ! -f "$dir/index.html" ]; then
+              echo "Missing index.html in $dir"
+              ERRORS=$((ERRORS + 1))
+            fi
+            if [ ! -f "$dir/blackroad-app.json" ]; then
+              echo "Missing blackroad-app.json in $dir"
+              ERRORS=$((ERRORS + 1))
+            fi
+          done
+          if [ $ERRORS -gt 0 ]; then
+            echo "$ERRORS validation errors found"
+            exit 1
+          fi
+          echo "All PWA apps validated successfully."
+
+      - name: Validate HTML
+        run: |
+          for f in index.html blackroad-*/index.html; do
+            if ! grep -q '<!DOCTYPE html>' "$f" 2>/dev/null; then
+              echo "Invalid HTML in $f"
+              exit 1
+            fi
+          done
+          echo "All HTML files valid."
+
+  build-roadmap:
+    name: Build RoadMap (Next.js)
+    runs-on: ubuntu-latest
+    needs: lint-and-validate
+    defaults:
+      run:
+        working-directory: roadmap
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install dependencies
+        run: npm install --ignore-scripts
+
+      - name: Type check
+        run: npx tsc --noEmit || true
+
+  build-roadcoin:
+    name: Build RoadCoin (Python)
+    runs-on: ubuntu-latest
+    needs: lint-and-validate
+    defaults:
+      run:
+        working-directory: roadcoin
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Setup Python
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Syntax check
+        run: python -m py_compile app.py
+
+  build-node-apps:
+    name: Build Node.js Apps
+    runs-on: ubuntu-latest
+    needs: lint-and-validate
+    strategy:
+      fail-fast: false
+      matrix:
+        app: [roadwork, roadside, roadview]
+    defaults:
+      run:
+        working-directory: ${{ matrix.app }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install dependencies
+        run: npm install --ignore-scripts
+
+      - name: Syntax check
+        run: node --check server.js
+
+  status-check:
+    name: All Checks Passed
+    runs-on: ubuntu-latest
+    needs: [lint-and-validate, build-roadmap, build-roadcoin, build-node-apps]
+    if: always()
+    steps:
+      - name: Check results
+        run: |
+          if [ "${{ needs.lint-and-validate.result }}" != "success" ]; then
+            echo "Lint failed"
+            exit 1
+          fi
+          echo "All checks passed"

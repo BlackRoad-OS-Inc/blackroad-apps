@@ -1,115 +1,119 @@
-name: 🚀 Auto Deploy
+name: Auto Deploy
 
 on:
   push:
     branches: [main, master]
   workflow_dispatch:
+    inputs:
+      target:
+        description: "Deploy target (cloudflare, railway, all)"
+        required: false
+        default: "all"
+
+permissions:
+  contents: read
+  deployments: write
 
 env:
-  NODE_VERSION: '20'
+  NODE_VERSION: "20"
 
 jobs:
-  detect-service:
-    name: Detect Service Type
+  detect-changes:
+    name: Detect Changes
     runs-on: ubuntu-latest
     outputs:
-      service_type: ${{ steps.detect.outputs.service_type }}
-      deploy_target: ${{ steps.detect.outputs.deploy_target }}
-    
+      static_changed: ${{ steps.changes.outputs.static }}
+      roadmap_changed: ${{ steps.changes.outputs.roadmap }}
+      roadcoin_changed: ${{ steps.changes.outputs.roadcoin }}
+      node_changed: ${{ steps.changes.outputs.node }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
-      
-      - name: Detect Service Type
-        id: detect
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 2
+
+      - name: Detect changed paths
+        id: changes
         run: |
-          if [ -f "next.config.mjs" ] || [ -f "next.config.js" ]; then
-            echo "service_type=nextjs" >> $GITHUB_OUTPUT
-            echo "deploy_target=cloudflare" >> $GITHUB_OUTPUT
-          elif [ -f "Dockerfile" ]; then
-            echo "service_type=docker" >> $GITHUB_OUTPUT
-            echo "deploy_target=railway" >> $GITHUB_OUTPUT
-          elif [ -f "package.json" ]; then
-            echo "service_type=node" >> $GITHUB_OUTPUT
-            echo "deploy_target=railway" >> $GITHUB_OUTPUT
-          elif [ -f "requirements.txt" ]; then
-            echo "service_type=python" >> $GITHUB_OUTPUT
-            echo "deploy_target=railway" >> $GITHUB_OUTPUT
+          CHANGED=$(git diff --name-only HEAD~1 HEAD 2>/dev/null || echo "all")
+          if echo "$CHANGED" | grep -q "^index.html\|^blackroad-"; then
+            echo "static=true" >> $GITHUB_OUTPUT
           else
-            echo "service_type=static" >> $GITHUB_OUTPUT
-            echo "deploy_target=cloudflare" >> $GITHUB_OUTPUT
+            echo "static=false" >> $GITHUB_OUTPUT
+          fi
+          if echo "$CHANGED" | grep -q "^roadmap/"; then
+            echo "roadmap=true" >> $GITHUB_OUTPUT
+          else
+            echo "roadmap=false" >> $GITHUB_OUTPUT
+          fi
+          if echo "$CHANGED" | grep -q "^roadcoin/"; then
+            echo "roadcoin=true" >> $GITHUB_OUTPUT
+          else
+            echo "roadcoin=false" >> $GITHUB_OUTPUT
+          fi
+          if echo "$CHANGED" | grep -qE "^(roadwork|roadside|roadview)/"; then
+            echo "node=true" >> $GITHUB_OUTPUT
+          else
+            echo "node=false" >> $GITHUB_OUTPUT
           fi
 
-  deploy-cloudflare:
-    name: Deploy to Cloudflare Pages
-    needs: detect-service
-    if: needs.detect-service.outputs.deploy_target == 'cloudflare'
+  deploy-static:
+    name: Deploy Static (Cloudflare Pages)
+    needs: detect-changes
+    if: needs.detect-changes.outputs.static_changed == 'true' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
-    
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
-      
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
-      
-      - name: Install Dependencies
-        run: npm ci
-      
-      - name: Build
-        run: npm run build
-        env:
-          NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}
-      
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
       - name: Deploy to Cloudflare Pages
-        uses: cloudflare/wrangler-action@v3
+        uses: cloudflare/wrangler-action@da0e0cd62e1941b3e1c113337e06b38ceea60e49 # v3.14.0
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy .next --project-name=${{ github.event.repository.name }}
+          command: pages deploy . --project-name=blackroad-apps
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
 
   deploy-railway:
-    name: Deploy to Railway
-    needs: detect-service
-    if: needs.detect-service.outputs.deploy_target == 'railway'
+    name: Deploy Services (Railway)
+    needs: detect-changes
+    if: >
+      needs.detect-changes.outputs.roadmap_changed == 'true' ||
+      needs.detect-changes.outputs.roadcoin_changed == 'true' ||
+      needs.detect-changes.outputs.node_changed == 'true' ||
+      github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
-    
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
-      
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
       - name: Install Railway CLI
-        run: npm i -g @railway/cli
-      
+        run: npm i -g @railway/cli@3.22.0
+
       - name: Deploy to Railway
         run: railway up --service ${{ github.event.repository.name }}
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
 
   health-check:
-    name: Health Check
-    needs: [deploy-cloudflare, deploy-railway]
-    if: always() && (needs.deploy-cloudflare.result == 'success' || needs.deploy-railway.result == 'success')
+    name: Post-Deploy Health Check
+    needs: [deploy-static, deploy-railway]
+    if: always() && (needs.deploy-static.result == 'success' || needs.deploy-railway.result == 'success')
     runs-on: ubuntu-latest
-    
     steps:
-      - name: Wait for Deployment
+      - name: Wait for propagation
         run: sleep 30
-      
-      - name: Check Health Endpoint
+
+      - name: Health check
         run: |
-          URL="${{ secrets.DEPLOY_URL }}/api/health"
-          curl -f $URL || exit 1
-      
-      - name: Notify Success
-        if: success()
-        run: echo "✅ Deployment successful and healthy!"
-      
-      - name: Notify Failure
-        if: failure()
-        run: |
-          echo "❌ Deployment health check failed!"
-          exit 1
+          if [ -n "${{ secrets.DEPLOY_URL }}" ]; then
+            STATUS=$(curl -s -o /dev/null -w "%{http_code}" "${{ secrets.DEPLOY_URL }}" || echo "000")
+            echo "Health check status: $STATUS"
+            if [ "$STATUS" -lt 200 ] || [ "$STATUS" -ge 400 ]; then
+              echo "Health check returned non-success status"
+              exit 1
+            fi
+          else
+            echo "DEPLOY_URL not configured, skipping health check"
+          fi

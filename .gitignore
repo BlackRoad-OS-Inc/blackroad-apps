@@ -1,2 +1,60 @@
+# OS
 .DS_Store
+Thumbs.db
+
+# Logs
 *.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependencies
+node_modules/
+.pnp/
+.pnp.js
+
+# Build outputs
+.next/
+out/
+dist/
+build/
+target/
+__pycache__/
+*.pyc
+*.pyo
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Credentials (never commit)
+credentials.json
+serviceAccountKey.json
+*.pem
+*.key
+
+# Cloudflare
+.wrangler/
+
+# Railway
+.railway/
+
+# Vercel
+.vercel/
+
+# Coverage
+coverage/
+.nyc_output/
+htmlcov/
+
+# Misc
+*.tgz
+*.tar.gz
