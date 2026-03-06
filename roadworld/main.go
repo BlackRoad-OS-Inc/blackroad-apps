@@ -106,6 +106,7 @@ func main() {
 	
 	api := r.Group("/api")
 	{
+		api.GET("/health", healthCheck)
 		api.GET("/worlds", getWorlds)
 		api.GET("/worlds/:id", getWorld)
 		api.POST("/worlds", createWorld)

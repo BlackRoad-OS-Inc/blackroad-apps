@@ -8,6 +8,10 @@ app.get('/health', (req, res) => {
   res.json({ status: 'healthy', service: 'RoadView', version: '1.0.0' });
 });
 
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'healthy', service: 'RoadView', version: '1.0.0' });
+});
+
 app.get('/', (req, res) => {
   res.json({
     name: 'RoadView',

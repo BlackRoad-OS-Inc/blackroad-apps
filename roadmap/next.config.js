@@ -3,6 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   compress: true,
+  output: 'standalone',
   env: {
     DEPLOYMENT_TARGET: process.env.DEPLOYMENT_TARGET || 'production'
   }

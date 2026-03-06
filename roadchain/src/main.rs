@@ -5,6 +5,7 @@ use sha2::{Sha256, Digest};
 use std::sync::Mutex;
 use chrono::Utc;
 use uuid::Uuid;
+use std::env;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 struct Block {
@@ -62,9 +63,10 @@ async fn root() -> impl Responder {
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    let port = std::env::var("PORT").unwrap_or_else(|_| "8080".to_string());
+    let port = env::var("PORT").unwrap_or_else(|_| "8080".to_string());
     let addr = format!("0.0.0.0:{}", port);
-    
+    let allowed_origin = env::var("CORS_ORIGIN").unwrap_or_else(|_| "http://localhost:3000".to_string());
+
     let genesis = Block::new(0, "Genesis".to_string(), "0".to_string());
     let app_state = web::Data::new(AppState {
         blockchain: Mutex::new(vec![genesis]),
@@ -73,10 +75,16 @@ async fn main() -> std::io::Result<()> {
     println!("RoadChain running on port {}", port);
     
     HttpServer::new(move || {
+        let cors = Cors::default()
+            .allowed_origin(&allowed_origin)
+            .allowed_methods(vec!["GET", "POST"])
+            .allowed_headers(vec!["Content-Type", "Authorization"])
+            .max_age(3600);
         App::new()
-            .wrap(Cors::default().allow_any_origin())
+            .wrap(cors)
             .app_data(app_state.clone())
             .route("/health", web::get().to(health_check))
+            .route("/api/health", web::get().to(health_check))
             .route("/", web::get().to(root))
     })
     .bind(&addr)?
