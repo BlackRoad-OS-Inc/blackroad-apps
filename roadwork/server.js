@@ -3,17 +3,30 @@ const cors = require('cors');
 const helmet = require('helmet');
 const compression = require('compression');
 const morgan = require('morgan');
+const rateLimit = require('express-rate-limit');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(helmet());
-app.use(cors());
+app.use(cors({
+  origin: process.env.CORS_ORIGIN || 'http://localhost:3000',
+  credentials: true,
+}));
 app.use(compression());
 app.use(morgan('combined'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { success: false, error: 'Too many requests, please try again later.' },
+});
+app.use('/api/', limiter);
 
 // In-memory databases
 const jobs = [
@@ -75,7 +88,7 @@ const entrepreneurs = [
 const applications = [];
 
 // Health check
-app.get('/health', (req, res) => {
+const healthHandler = (req, res) => {
   res.json({
     status: 'healthy',
     service: 'RoadWork API',
@@ -87,7 +100,9 @@ app.get('/health', (req, res) => {
       total_applications: applications.length
     }
   });
-});
+};
+app.get('/health', healthHandler);
+app.get('/api/health', healthHandler);
 
 // Root
 app.get('/', (req, res) => {

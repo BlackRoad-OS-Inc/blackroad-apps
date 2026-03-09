@@ -12,10 +12,13 @@ func main() {
 	}
 
 	r := gin.Default()
-	
-	r.GET("/health", func(c *gin.Context) {
-		c.JSON(200, gin.H{"status": "healthy", "service": "PitStop"})
-	})
+
+	healthHandler := func(c *gin.Context) {
+		c.JSON(200, gin.H{"status": "healthy", "service": "PitStop", "version": "1.0.0"})
+	}
+
+	r.GET("/health", healthHandler)
+	r.GET("/api/health", healthHandler)
 	
 	r.GET("/", func(c *gin.Context) {
 		c.JSON(200, gin.H{
