@@ -1,5 +1,11 @@
 # BlackRoad Apps
 
+[![PWA](https://img.shields.io/badge/PWA-50_apps-FF6B2B.svg)](https://apps.blackroad.io)
+[![Offline First](https://img.shields.io/badge/offline-first-00D4FF.svg)](https://blackroad.io)
+[![Installable](https://img.shields.io/badge/installable-service_worker-CC00AA.svg)](https://blackroad.io)
+
+
+
 Application suite for the BlackRoad OS platform. 8 services spanning project management, streaming, blockchain, and infrastructure monitoring.
 
 ## Applications
