@@ -1,63 +1,41 @@
-# BlackRoad Apps
+<div align="center">
 
-[![PWA](https://img.shields.io/badge/PWA-50_apps-FF6B2B.svg)](https://apps.blackroad.io)
-[![Offline First](https://img.shields.io/badge/offline-first-00D4FF.svg)](https://blackroad.io)
-[![Installable](https://img.shields.io/badge/installable-service_worker-CC00AA.svg)](https://blackroad.io)
+<img src="https://images.blackroad.io/pixel-art/road-logo.png" alt="BlackRoad OS" width="80" />
 
+# blackroad-apps
 
+**BlackRoad Apps — 50 production-ready Progressive Web Apps. Offline-first, installable, service workers, responsive design. Calculator, notes, weather, music, and more.**
 
-Application suite for the BlackRoad OS platform. 8 services spanning project management, streaming, blockchain, and infrastructure monitoring.
+[![BlackRoad OS](https://img.shields.io/badge/BlackRoad_OS-Pave_Tomorrow-FF2255?style=for-the-badge&labelColor=000000)](https://blackroad.io)
+[![License](https://img.shields.io/badge/License-Proprietary-FF6B2B?style=for-the-badge&labelColor=000000)](./LICENSE)
+[![Edge AI](https://img.shields.io/badge/Edge_AI-52_TOPS-00D4FF?style=for-the-badge&labelColor=000000)](https://github.com/BlackRoad-OS-Inc)
 
-## Applications
+</div>
 
-| App | Stack | Description |
-|-----|-------|-------------|
-| **RoadMap** | Next.js, TypeScript, WebSockets | Project planning with real-time Kanban boards |
-| **RoadWork** | Node.js, Express | Job board with AI matching |
-| **RoadWorld** | Go, Gin, WebGL | Earth exploration and virtual environments |
-| **RoadChain** | Rust, Actix-web, SHA-256 | Blockchain verification and immutable storage |
-| **RoadCoin** | Python, FastAPI, Redis | Equity crowdfunding and crypto payments |
-| **RoadView** | Node.js | Creative suite — design, video, AI generation |
-| **PitStop** | Go, Gin | Infrastructure dashboard with real-time metrics |
-| **RoadSide** | Node.js, Socket.io | Deployment portal and server connections |
+<div align="center">
+<sub>Part of the <a href="https://blackroad.io">BlackRoad OS</a> ecosystem — sovereign edge AI infrastructure</sub>
+</div>
 
-## Deploy
+---
 
-```bash
-# Deploy all
-./DEPLOY_ALL.sh
+## Overview
 
-# Deploy one app
-~/blackroad-deploy/br-deploy deploy ~/blackroad-apps/roadmap aria64
-```
-
-## Architecture
-
-Apps run on Raspberry Pi nodes (aria64) and DigitalOcean droplets behind Caddy reverse proxy.
-
-```bash
-# Check deployments
-~/blackroad-deploy/br-deploy list aria64
-
-# View logs
-~/blackroad-deploy/br-deploy logs roadmap aria64
-```
-
-## Project Structure
-
-```
-blackroad-apps/
-  roadmap/        # Project planning
-  roadwork/       # Job portal
-  roadworld/      # Earth exploration
-  roadchain/      # Blockchain
-  roadcoin/       # Crowdfunding
-  roadview/       # Creative suite
-  pitstop/        # Infrastructure dashboard
-  roadside/       # Deploy portal
-  DEPLOY_ALL.sh   # Batch deploy script
-```
+BlackRoad Apps — 50 production-ready Progressive Web Apps. Offline-first, installable, service workers, responsive design. Calculator, notes, weather, music, and more.
 
 ## License
 
-Copyright 2026 BlackRoad OS, Inc. All rights reserved.
+**Proprietary** — Copyright © 2024–2026 [BlackRoad OS, Inc.](https://blackroad.io) All rights reserved.
+
+Founder & CEO: **Alexa Louise Amundson** · Delaware C-Corp
+
+See [LICENSE](./LICENSE) for full terms.
+
+---
+
+<div align="center">
+
+**BlackRoad OS — Pave Tomorrow.**
+
+[blackroad.io](https://blackroad.io) · [GitHub](https://github.com/BlackRoad-OS-Inc) · [Brand](https://brand.blackroad.io)
+
+</div>
