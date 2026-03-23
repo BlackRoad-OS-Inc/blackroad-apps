@@ -1,3 +1,11 @@
+# blackroad-apps
+
+> BlackRoad Apps — 50 production-ready Progressive Web Apps. Offline-first, installable, service workers, responsive design. Calculator, notes, weather, music, and more.
+
+Part of the [BlackRoad OS](https://blackroad.io) ecosystem — [BlackRoad-OS-Inc](https://github.com/BlackRoad-OS-Inc)
+
+---
+
 <div align="center">
 
 <img src="https://images.blackroad.io/pixel-art/road-logo.png" alt="BlackRoad OS" width="80" />
